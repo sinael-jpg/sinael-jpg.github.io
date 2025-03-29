@@ -1,0 +1,169 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>신라 첨성대 통합 자료 - 인터랙티브</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #fdfdfd;
+            margin: 20px;
+            color: #222;
+        }
+        h1 {
+            color: #2a4d69;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        h1 span {
+            font-size: 1.1em;
+            font-weight: normal;
+            color: #444;
+        }
+        h2 {
+            color: #2a4d69;
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+        .image-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .image-container img {
+            width: auto;
+            max-width: 300px;
+            max-height: 300px;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+        iframe {
+            width: 560px;
+            height: 315px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        .text-box {
+            background-color: #f1f1f1;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 10px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+        }
+        .quiz, .hover-boxes, .chatbot {
+            margin: 30px 0;
+        }
+        .quiz button {
+            margin: 5px;
+        }
+        .hover-part {
+            display: inline-block;
+            background-color: #e3e3ff;
+            padding: 5px 10px;
+            border-radius: 6px;
+            margin: 5px;
+        }
+        .tooltip {
+            display: none;
+            background: #fff;
+            border: 1px solid #999;
+            padding: 8px;
+            position: absolute;
+            z-index: 10;
+            max-width: 200px;
+        }
+    </style>
+</head>
+<body>
+<h1>신라 첨성대 통합 자료 <span>제작: 2315 이희찬</span></h1>
+
+<div class="section">
+    <h2>📸 첨성대 사진</h2>
+    <div class="image-container">
+        <img src="cheomseongdae-5807874_1280.jpg" alt="첨성대 주간">
+        <img src="th.jpg" alt="첨성대 야경">
+        <img src="202203035351_500.jpg" alt="첨성대 맑은 날">
+    </div>
+</div>
+
+<div class="section">
+    <h2>🎥 첨성대 관련 영상</h2>
+    <p>YTN 사이언스 - 별의 역사를 간직하다, 첨성대</p>
+    <iframe src="https://www.youtube.com/embed/OgYJrWMuyW8" allowfullscreen></iframe>
+    <p style="margin-top:20px;">문화유산채널 - 첨성대에 올라 별을 세다</p>
+    <iframe src="https://www.youtube.com/embed/A_TE1obuXMw" allowfullscreen></iframe>
+</div>
+
+<div class="section">
+    <h2>📄 첨성대 해설</h2>
+    <div class="text-box">
+        <p><strong>첨성대</strong>는 신라 선덕여왕 시기 지어진 세계 최초의 석조 천문대로, 총 27단의 원형 구조와 정남향 창문을 통해 천체를 관측할 수 있도록 설계되었습니다.</p>
+    </div>
+</div>
+
+<div class="quiz">
+    <h2>🧠 퀴즈! 첨성대는 신라 제 몇 대 왕 시절에 만들어졌을까요?</h2>
+    <button onclick="checkAnswer(this, false)">23대</button>
+    <button onclick="checkAnswer(this, false)">25대</button>
+    <button onclick="checkAnswer(this, true)">27대</button>
+    <button onclick="checkAnswer(this, false)">30대</button>
+    <p id="quiz-result"></p>
+</div>
+
+<div class="hover-boxes">
+    <h2>🔍 첨성대 구조 설명 (마우스를 올려보세요)</h2>
+    <div class="hover-part" onmouseover="showTip(event, '정방형 기단은 지방(地)을 의미합니다.')" onmouseout="hideTip()">기단</div>
+    <div class="hover-part" onmouseover="showTip(event, '창문은 별이나 해를 관측하는 데 사용되었습니다.')" onmouseout="hideTip()">창문</div>
+    <div class="hover-part" onmouseover="showTip(event, '27단은 선덕여왕과 달의 주기를 상징합니다.')" onmouseout="hideTip()">27단</div>
+    <div id="tooltip" class="tooltip"></div>
+</div>
+
+<div class="chatbot">
+    <h2>💬 선덕여왕에게 질문해보세요</h2>
+    <button onclick="askQueen('왜 첨성대를 지으셨나요?')">왜 첨성대를 지으셨나요?</button>
+    <button onclick="askQueen('첨성대는 무슨 기능이 있나요?')">첨성대는 무슨 기능이 있나요?</button>
+    <button onclick="askQueen('지금도 별이 보이나요?')">지금도 별이 보이나요?</button>
+    <p id="queen-answer"></p>
+</div>
+
+<script>
+    function checkAnswer(button, isCorrect) {
+        const result = document.getElementById('quiz-result');
+        if (isCorrect) {
+            result.textContent = '정답입니다! 🎉';
+            result.style.color = 'green';
+        } else {
+            result.textContent = '틀렸어요! 다시 생각해보세요.';
+            result.style.color = 'red';
+        }
+    }
+
+    function showTip(event, text) {
+        const tooltip = document.getElementById('tooltip');
+        tooltip.style.display = 'block';
+        tooltip.style.left = event.pageX + 'px';
+        tooltip.style.top = event.pageY + 'px';
+        tooltip.textContent = text;
+    }
+
+    function hideTip() {
+        document.getElementById('tooltip').style.display = 'none';
+    }
+
+    function askQueen(question) {
+        const answerBox = document.getElementById('queen-answer');
+        const answers = {
+            '왜 첨성대를 지으셨나요?': '백성의 농사와 하늘의 뜻을 살피기 위함이오.',
+            '첨성대는 무슨 기능이 있나요?': '별과 태양의 움직임을 관측하여 계절과 절기를 파악했소.',
+            '지금도 별이 보이나요?': '도심의 불빛이 많아 예전 같진 않지만, 그 정신은 이어지고 있소.'
+        };
+        answerBox.textContent = '👑 선덕여왕: ' + answers[question];
+    }
+</script>
+</body>
+</html>
